@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}Bean & Brew{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --espresso: #1a0f0a;
+      --roast:    #3d2012;
+      --caramel:  #c8882a;
+      --cream:    #fdf8f2;
+      --latte:    #ede0cc;
+      --steam:    #f5efe6;
+      --text:     #2c1810;
+      --muted:    #8a7060;
+      --border:   #ddd0bc;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── NAV ── */
+    nav {
+      background: var(--espresso);
+      position: sticky;
+      top: 0;
+      z-index: 99;
+    }
+
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: var(--cream);
+      letter-spacing: .04em;
+      text-decoration: none;
+    }
+
+    .nav-logo span { color: var(--caramel); }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: .25rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: rgba(255,255,255,.65);
+      text-decoration: none;
+      font-size: .875rem;
+      font-weight: 500;
+      padding: .45rem .9rem;
+      border-radius: 6px;
+      transition: color .2s, background .2s;
+    }
+
+    .nav-links a:hover { color: #fff; background: rgba(255,255,255,.08); }
+    .nav-links a.active { color: var(--caramel); }
+
+    /* ── MAIN ── */
+    main { flex: 1; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--espresso);
+      color: rgba(255,255,255,.5);
+      text-align: center;
+      padding: 2.5rem 1rem;
+      font-size: .82rem;
+      letter-spacing: .04em;
+    }
+
+    footer strong { color: var(--caramel); font-weight: 600; }
+
+    /* ── SHARED UTILITIES ── */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+
+    .badge {
+      display: inline-block;
+      padding: .2rem .65rem;
+      border-radius: 50px;
+      font-size: .72rem;
+      font-weight: 600;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+    .badge-green { background: #d4edda; color: #1e6b35; }
+    .badge-red   { background: #fde8e5; color: #9b2c2c; }
+  </style>
+  {% block extra_css %}{% endblock %}
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="{% url 'products:index' %}" class="nav-logo">Bean <span>&</span> Brew</a>
+    <ul class="nav-links">
+      <li>
+        <a href="{% url 'products:index' %}"
+           {% if request.resolver_match.app_name == 'products' %}class="active"{% endif %}>
+          Shop
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'about_us:about' %}"
+           {% if request.resolver_match.app_name == 'about_us' %}class="active"{% endif %}>
+          About Us
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<main>
+  {% block content %}{% endblock %}
+</main>
+
+<footer>
+  <strong>Bean &amp; Brew</strong> — Specialty Coffee Marketplace &nbsp;·&nbsp; ©2026
+</footer>
+
+{% block extra_js %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,463 @@
+{% extends "base.html" %}
+
+{% block title %}About Us — Bean & Brew{% endblock %}
+
+{% block extra_css %}
+<style>
+
+  /* ════════════════════════════════════════
+     HERO
+  ════════════════════════════════════════ */
+  .about-hero {
+    background: var(--espresso);
+    padding: 100px 2rem 90px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .about-hero::before {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0; right: 0;
+    height: 80px;
+    background: var(--cream);
+    clip-path: ellipse(55% 100% at 50% 100%);
+  }
+
+  .about-hero .tag {
+    display: inline-block;
+    border: 1px solid rgba(200,136,42,.4);
+    color: var(--caramel);
+    font-size: .7rem;
+    font-weight: 700;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    padding: .35rem 1rem;
+    border-radius: 50px;
+    margin-bottom: 1.5rem;
+  }
+
+  .about-hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.6rem, 6vw, 4.5rem);
+    font-weight: 600;
+    color: #fff;
+    line-height: 1.1;
+    margin-bottom: 1.25rem;
+  }
+
+  .about-hero h1 em { font-style: italic; color: var(--caramel); }
+
+  .about-hero p {
+    color: rgba(255,255,255,.55);
+    font-size: 1rem;
+    max-width: 500px;
+    margin: 0 auto;
+    line-height: 1.8;
+  }
+
+  /* ════════════════════════════════════════
+     STORY SECTION
+  ════════════════════════════════════════ */
+  .story-section {
+    padding: 80px 0;
+    background: var(--cream);
+  }
+
+  .story-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+  }
+
+  .story-label {
+    font-size: .7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .15em;
+    color: var(--caramel);
+    margin-bottom: 1rem;
+  }
+
+  .story-grid h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 3.5vw, 2.8rem);
+    font-weight: 600;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+    color: var(--text);
+  }
+
+  .story-grid p {
+    color: var(--muted);
+    font-size: .95rem;
+    line-height: 1.85;
+    margin-bottom: 1rem;
+  }
+
+  /* visual panel */
+  .story-visual {
+    background: var(--espresso);
+    border-radius: 20px;
+    padding: 3.5rem;
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
+  .story-visual::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 30% 70%, rgba(200,136,42,.22) 0%, transparent 60%);
+  }
+
+  .story-visual .big-year {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 8rem;
+    font-weight: 600;
+    color: rgba(255,255,255,.05);
+    line-height: 1;
+    position: absolute;
+    top: 1rem; right: 1.5rem;
+  }
+
+  .story-visual blockquote {
+    position: relative;
+    z-index: 1;
+  }
+
+  .story-visual .q-mark {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 5rem;
+    color: var(--caramel);
+    line-height: .8;
+    margin-bottom: .75rem;
+  }
+
+  .story-visual blockquote p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-style: italic;
+    color: rgba(255,255,255,.88);
+    line-height: 1.5;
+    margin-bottom: .75rem;
+  }
+
+  .story-visual cite {
+    font-size: .78rem;
+    color: rgba(255,255,255,.4);
+    font-style: normal;
+    font-weight: 600;
+    letter-spacing: .05em;
+  }
+
+  /* ════════════════════════════════════════
+     VALUES SECTION
+  ════════════════════════════════════════ */
+  .values-section {
+    background: var(--steam);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 80px 0;
+  }
+
+  .values-header {
+    text-align: center;
+    margin-bottom: 3.5rem;
+  }
+
+  .values-header h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.2rem;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .values-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+
+  .value-card {
+    background: #fff;
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    padding: 2rem 1.75rem;
+    transition: transform .25s, box-shadow .25s;
+  }
+
+  .value-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 36px rgba(26,15,10,.09);
+  }
+
+  .value-icon {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .value-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: .6rem;
+  }
+
+  .value-card p {
+    font-size: .875rem;
+    color: var(--muted);
+    line-height: 1.75;
+  }
+
+  /* ════════════════════════════════════════
+     TEAM SECTION
+  ════════════════════════════════════════ */
+  .team-section { padding: 80px 0 96px; }
+
+  .team-header {
+    text-align: center;
+    margin-bottom: 3.5rem;
+  }
+
+  .team-header h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.2rem;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .team-header p {
+    color: var(--muted);
+    font-size: .9rem;
+    margin-top: .5rem;
+  }
+
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+  }
+
+  .team-card {
+    text-align: center;
+    padding: 2rem 1rem;
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    background: #fff;
+    transition: transform .25s;
+  }
+
+  .team-card:hover { transform: translateY(-4px); }
+
+  .team-avatar {
+    width: 64px;
+    height: 64px;
+    background: var(--latte);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.75rem;
+    margin: 0 auto 1rem;
+  }
+
+  .team-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: .25rem;
+  }
+
+  .team-role {
+    font-size: .72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: var(--caramel);
+    margin-bottom: .75rem;
+  }
+
+  .team-bio {
+    font-size: .8rem;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+
+  /* ════════════════════════════════════════
+     CTA STRIP
+  ════════════════════════════════════════ */
+  .cta-strip {
+    background: var(--caramel);
+    padding: 64px 2rem;
+    text-align: center;
+  }
+
+  .cta-strip h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.4rem;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: .75rem;
+  }
+
+  .cta-strip p {
+    color: rgba(255,255,255,.75);
+    font-size: .95rem;
+    margin-bottom: 2rem;
+  }
+
+  .btn-cta {
+    display: inline-block;
+    background: var(--espresso);
+    color: #fff;
+    text-decoration: none;
+    padding: .85rem 2.25rem;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: .95rem;
+    transition: transform .2s, opacity .2s;
+  }
+
+  .btn-cta:hover { transform: translateY(-2px); opacity: .9; }
+
+  /* ════════════════════════════════════════
+     RESPONSIVE
+  ════════════════════════════════════════ */
+  @media (max-width: 900px) {
+    .story-grid   { grid-template-columns: 1fr; gap: 2.5rem; }
+    .values-grid  { grid-template-columns: 1fr 1fr; }
+    .team-grid    { grid-template-columns: 1fr 1fr; }
+  }
+
+  @media (max-width: 560px) {
+    .values-grid  { grid-template-columns: 1fr; }
+    .team-grid    { grid-template-columns: 1fr 1fr; }
+  }
+
+</style>
+{% endblock %}
+
+{% block content %}
+
+<!-- HERO -->
+<section class="about-hero">
+  <div class="tag">Our Story</div>
+  <h1>Sourced With <em>Honesty</em>,<br>Roasted With Care</h1>
+  <p>We believe great coffee starts with the farmer. Every bag we sell is traceable to a single farm or cooperative.</p>
+</section>
+
+<!-- STORY -->
+<section class="story-section">
+  <div class="container">
+    <div class="story-grid">
+
+      <div>
+        <div class="story-label">Who We Are</div>
+        <h2>Born From a Love of Exceptional Coffee</h2>
+        <p>Bean &amp; Brew was founded in 2018 by two friends who couldn't stop talking about coffee. What began as weekend trips to farmers' markets became a full-fledged mission: bring the world's finest specialty beans directly to coffee lovers, with zero compromise.</p>
+        <p>We work directly with growers in Ethiopia, Colombia, Kenya, Guatemala, Indonesia, and Brazil — paying above fair-trade prices because quality and fairness are not separate ideas.</p>
+        <p>Every batch is small. Every roast is intentional. Every bag arrives within days of roasting.</p>
+      </div>
+
+      <div class="story-visual">
+        <div class="big-year">2018</div>
+        <blockquote>
+          <div class="q-mark">"</div>
+          <p>The best cup of coffee is the one that connects you to the person who grew it.</p>
+          <cite>— Founders, Bean &amp; Brew</cite>
+        </blockquote>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- VALUES -->
+<section class="values-section">
+  <div class="container">
+    <div class="values-header">
+      <h2>What We Stand For</h2>
+    </div>
+    <div class="values-grid">
+
+      <div class="value-card">
+        <div class="value-icon">🌱</div>
+        <h3>Direct Trade</h3>
+        <p>We pay above-market prices directly to farmers, eliminating middlemen and investing in better growing practices.</p>
+      </div>
+
+      <div class="value-card">
+        <div class="value-icon">🔥</div>
+        <h3>Fresh Roasted</h3>
+        <p>Every order is roasted within 48 hours of shipment. No warehousing. No stale beans. Just peak flavor.</p>
+      </div>
+
+      <div class="value-card">
+        <div class="value-icon">🗺️</div>
+        <h3>Full Traceability</h3>
+        <p>Every bag tells you the farm, the region, the altitude, and the process. You deserve to know your coffee's story.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section class="team-section">
+  <div class="container">
+    <div class="team-header">
+      <h2>The People Behind the Beans</h2>
+      <p>A small, passionate team obsessed with coffee and the communities that grow it.</p>
+    </div>
+    <div class="team-grid">
+
+      <div class="team-card">
+        <div class="team-avatar">👩‍🌾</div>
+        <div class="team-name">Sara Okonkwo</div>
+        <div class="team-role">Co-Founder & CEO</div>
+        <p class="team-bio">Former Q Grader. Spent 3 years sourcing in East Africa before starting Bean & Brew.</p>
+      </div>
+
+      <div class="team-card">
+        <div class="team-avatar">👨‍🍳</div>
+        <div class="team-name">Mateo Vargas</div>
+        <div class="team-role">Head Roaster</div>
+        <p class="team-bio">20 years behind the drum. Obsessed with the sweet spot between origin character and roast development.</p>
+      </div>
+
+      <div class="team-card">
+        <div class="team-avatar">👩‍💻</div>
+        <div class="team-name">Lena Fischer</div>
+        <div class="team-role">Co-Founder & CTO</div>
+        <p class="team-bio">Builds the platform that gets your coffee from farm to doorstep faster than anyone else.</p>
+      </div>
+
+      <div class="team-card">
+        <div class="team-avatar">📦</div>
+        <div class="team-name">James Park</div>
+        <div class="team-role">Operations</div>
+        <p class="team-bio">Makes sure every bag is packed, sealed, and shipped while the beans are still at peak freshness.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-strip">
+  <h2>Ready to Taste the Difference?</h2>
+  <p>Browse our current collection — all freshly roasted and ready to ship.</p>
+  <a href="{% url 'products:index' %}" class="btn-cta">Shop All Coffees →</a>
+</section>
+
+{% endblock %}

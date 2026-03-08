@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}Shop — Bean & Brew{% endblock %}
 
@@ -215,6 +216,23 @@
 
   .card:hover .btn-show .arrow { transform: translateX(3px); }
 
+  .btn-delete {
+    display: inline-flex;
+    align-items: center;
+    background: transparent;
+    color: #b03a2e;
+    border: 1.5px solid #e8b4af;
+    padding: .5rem .9rem;
+    border-radius: 8px;
+    font-size: .825rem;
+    font-weight: 600;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    transition: background .2s, color .2s;
+  }
+
+  .btn-delete:hover { background: #fde8e5; border-color: #b03a2e; }
+
 </style>
 {% endblock %}
 
@@ -241,7 +259,7 @@
       <article class="card">
 
         <div class="card-img">
-          <img src="{{ product.image }}" alt="{{ product.name }}" loading="lazy" />
+          <img src="{% static product.image %}" alt="{{ product.name }}" loading="lazy" />
           <div class="stock-tag">
             {% if product.stock_count > 0 %}
               <span class="badge badge-green">In Stock</span>
@@ -259,9 +277,15 @@
 
         <div class="card-footer">
           <div class="card-price"><sup>$</sup>{{ product.price }}</div>
-          <a href="{% url 'products:show' product.id %}" class="btn-show">
-            View <span class="arrow">→</span>
-          </a>
+          <div style="display:flex; gap:.5rem;">
+            <a href="{% url 'products:show' product.id %}" class="btn-show">
+              View <span class="arrow">→</span>
+            </a>
+            <form action="{% url 'products:delete' product.id %}" method="POST">
+              {% csrf_token %}
+              <button type="submit" class="btn-delete">Delete</button>
+            </form>
+          </div>
         </div>
 
       </article>
